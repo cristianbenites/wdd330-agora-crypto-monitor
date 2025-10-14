@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Cristian Benites" />
+    <meta
+      name="description"
+      content="Agora Crypto Monitor | Choose your crytpo currencies and follow the price! | Cristian Benites | index page"
+    />
+    <title>Add your currencies - Agora Crypto Monitor</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link href="styles/agora.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="scripts/create-card.js" type="module"></script>
+  </head>
+  <body class="bg-indigo-50 min-h-screen overflow-x-hidden">
+    <div
+      class="overlay fixed inset-0 bg-indigo-900/50 z-40 hidden opacity-0 transition-opacity duration-300"
+    ></div>
+
+    <header
+      class="fixed w-full bg-white text-indigo-800 z-50 shadow-lg animate-slide-down"
+      id="main-header"
+    ></header>
+
+    <div class="pt-16 max-w-7xl mx-auto flex">
+      <main class="flex-1 p-4">
+        <div class="flex items-center justify-center min-w-sm p-2">
+          <div class="relative w-full mx-auto">
+            <input
+              class="w-full py-2 px-4 bg-white border-0 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800"
+              type="search"
+              placeholder="Search"
+              id="search-crypto"
+            />
+            <button
+              class="absolute inset-y-0 right-0 group flex items-center cursor-pointer px-4 text-white bg-blue-800 border border-blue-800 rounded-r-md hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indig-800"
+              type="submit"
+              id="search-crypto-btn"
+            >
+              <span
+                class="material-icons-outlined p-2 text-2xl transition-transform duration-300 group-hover:scale-110 hidden md:block"
+                >search</span
+              >
+            </button>
+          </div>
+        </div>
+
+        <section>
+          <ul id="search-list"></ul>
+        </section>
+
+        <section id="cards"></section>
+      </main>
+    </div>
+
+    <dialog
+      id="modal"
+      class="fixed inset-1/2 -translate-x-1/2 -translate-y-1/2 mx-auto shadow-xl rounded-md p-2 backdrop:bg-black/50"
+    >
+      <div class="flex justify-end p-2">
+        <button
+          id="close-modal"
+          aria-label="Close Modal"
+          type="button"
+          class="text-gray-400 bg-transparent cursor-pointer hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+        >
+          <span class="material-icons-outlined">close</span>
+        </button>
+      </div>
+      <div id="modal-content"></div>
+    </dialog>
+  </body>
+</html>

@@ -7,7 +7,7 @@ function makeHeaderDynamic() {
 
 async function run() {
   await loadHeaderFooter();
-  makeHeaderDynamic();
+  //makeHeaderDynamic();
 }
 
 run();
