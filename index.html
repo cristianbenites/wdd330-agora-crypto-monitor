@@ -132,25 +132,55 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <p>
+          "id": "90", "symbol": "BTC", "name": "Bitcoin", "nameid": "bitcoin",
+          "rank": 1, "price_usd": "112101.80", "percent_change_24h": "-1.23",
+          "percent_change_1h": "-0.83", "percent_change_7d": "-7.88",
+          "price_btc": "1.00", "market_cap_usd": "2233588763982.20", "volume24":
+          75765353888.89673, "volume24a": 59557316979.674934, "csupply":
+          "19924646.00", "tsupply": "19924646", "msupply": "21000000"
+        </p>
+
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr)] gap-4">
+          <!-- BEGIN CARD -->
           <div
-            class="bg-white rounded-xl shadow-lg p-6 h-64 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-slide-up"
-            style="animation-delay: 0.1s"
+            class="max-w-fit bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-slide-up"
           >
-            <h3 class="text-xl font-bold text-indigo-800">Stats Card 1</h3>
+            <h3 class="text-xl font-bold text-indigo-800">BTC</h3>
+            <h2 class="text-4xl md:text-4xl text-blue-900">
+              <strong>$ 112,101.80</strong>
+            </h2>
+
+            <div class="flex gap-1 mt-2">
+              <div
+                class="text-gray-600 text-lg hover:bg-gray-200 flex items-center w-fit p-1 rounded-md"
+              >
+                <span class="material-icons-outlined text-green-800"
+                  >arrow_upward</span
+                >
+                <span class="text-green-800">1.23%</span>
+                <span>&nbsp;(24h)</span>
+              </div>
+
+              <div
+                class="text-gray-600 text-lg hover:bg-gray-200 flex items-center w-fit p-1 rounded-md"
+              >
+                <span class="material-icons-outlined text-red-800"
+                  >arrow_downward</span
+                >
+                <span class="text-red-800">-0.83%</span>
+                <span>&nbsp;(1h)</span>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-lg flex items-center text-gray-600">
+                <span class="material-icons-outlined mr-2">alarm</span>
+                alert at $ 111,000.00
+              </h4>
+            </div>
           </div>
-          <div
-            class="bg-white rounded-xl shadow-lg p-6 h-64 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-slide-up"
-            style="animation-delay: 0.2s"
-          >
-            <h3 class="text-xl font-bold text-indigo-800">Stats Card 2</h3>
-          </div>
-          <div
-            class="bg-white rounded-xl shadow-lg p-6 h-64 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-slide-up"
-            style="animation-delay: 0.3s"
-          >
-            <h3 class="text-xl font-bold text-indigo-800">Stats Card 3</h3>
-          </div>
+          <!-- END CARD -->
         </div>
       </main>
     </div>

@@ -11,6 +11,7 @@ export function getLocalStorage(key) {
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -37,7 +38,7 @@ export function renderListWithTemplate(
   if (clear) {
     parentElement.innerHTML = "";
   }
-  parentElement.insertAdjacentHTML(position, htmlItems.join(""));
+  parentElement.insertAdjacentHTML(position, htmlItems.reverse().join(""));
 }
 
 export function renderWithTemplate(template, parentElement, data, callback) {
