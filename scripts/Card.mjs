@@ -23,13 +23,6 @@ export default class Card {
           <span data-key="market_cap_usd"></span>
         </h4>
       </div>
-
-      <div data-section="alert" class="hidden">
-        <h4 class="text-lg flex items-center text-gray-600 mt-2">
-          <span class="material-icons-outlined mr-2">alarm</span>
-          <span data-key="show_alert">alert at $ 111,000.00</span>
-        </h4>
-      </div>
     `;
   }
 
@@ -145,13 +138,6 @@ export default class Card {
     textValue.innerText = this.formatUSD(this.data["market_cap_usd"] ?? 0);
   }
 
-  populateAlert(fragment) {
-    const alertSection = fragment.querySelector('[data-section="alert"]');
-    if (this.fieldVisible("show_alert")) {
-      alertSection && alertSection.classList.remove("hidden");
-    }
-  }
-
   render() {
     const template = document.createElement("template");
     template.innerHTML = this.template.trim();
@@ -161,7 +147,6 @@ export default class Card {
     this.populatePrice(fragment);
     this.populatePercents(fragment);
     this.populateMarketCap(fragment);
-    this.populateAlert(fragment);
 
     this.card.appendChild(fragment);
     return this.card;

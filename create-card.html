@@ -61,21 +61,16 @@
       </main>
     </div>
 
-    <dialog
-      id="modal"
-      class="fixed inset-1/2 -translate-x-1/2 -translate-y-1/2 mx-auto shadow-xl rounded-md p-2 backdrop:bg-black/50"
+    <div
+      id="save-notification"
+      class="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-5 py-3 rounded-lg shadow-lg transition-all duration-500 w-1/2 opacity-0 hidden"
     >
-      <div class="flex justify-end p-2">
-        <button
-          id="close-modal"
-          aria-label="Close Modal"
-          type="button"
-          class="text-gray-400 bg-transparent cursor-pointer hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-        >
-          <span class="material-icons-outlined">close</span>
-        </button>
+      <p class="font-medium">✅ Saved successfully!</p>
+      <div class="relative mt-2 h-1 bg-white/40 rounded">
+        <div
+          class="absolute top-0 left-0 h-full bg-white rounded progress-bar"
+        ></div>
       </div>
-      <div id="modal-content"></div>
-    </dialog>
+    </div>
   </body>
 </html>

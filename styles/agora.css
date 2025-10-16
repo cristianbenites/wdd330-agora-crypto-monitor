@@ -1,0 +1,22 @@
+.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.hide {
+  opacity: 0 !important;
+  transform: translateY(-10px) !important;
+}
+
+.progress-bar {
+  animation: shrink 3s linear forwards;
+}
+
+@keyframes shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}

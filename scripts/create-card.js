@@ -1,13 +1,12 @@
 import CardDrawer from "./CardDrawer.mjs";
 import ExternalServices from "./ExternalServices.mjs";
-import { loadHeaderFooter, qs, runCloseModal, setClick } from "./utils.mjs";
+import { loadHeaderFooter, qs, setClick } from "./utils.mjs";
 
 async function run() {
   await loadHeaderFooter();
 }
 
 run();
-runCloseModal();
 
 let coin2 = {
   id: "90",
@@ -66,7 +65,6 @@ setClick("#search-crypto-btn", async () => {
   list.appendChild(li);
 });
 
-// Click listener (event delegation)
 list.addEventListener("click", (e) => {
   const li = e.target.closest(".coin-item");
   if (!li) return;
