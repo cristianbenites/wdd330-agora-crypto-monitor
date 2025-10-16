@@ -20,10 +20,10 @@ export default class Card {
       </h2>
       <h3 class="text-lg font-bold text-indigo-800" data-key="price_btc"></h3>
 
-      <div class="grid grid-cols-2 w-full mt-2" data-section="percents"></div>
+      <div class="grid sm:grid-cols-2 w-full mt-2" data-section="percents"></div>
 
       <div data-section="market-cap" class="mt-2">
-        <h4 class="text-lg flex items-center text-gray-600">
+        <h4 class="text-lg flex flex-wrap sm:flex-nowrap items-center text-gray-600">
           <span class="material-icons-outlined mr-2">account_balance</span>
           <span>Market Cap:&nbsp;</span>
           <span data-key="market_cap_usd"></span>
