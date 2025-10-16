@@ -12,13 +12,22 @@ export default class Card {
       <h2 class="text-4xl md:text-4xl text-blue-900" data-key="price_usd">
         <strong></strong>
       </h2>
+      <h3 class="text-lg font-bold text-indigo-800" data-key="price_btc"></h3>
 
       <div class="grid grid-cols-2 w-full mt-2" data-section="percents"></div>
 
-      <div data-section="alert">
+      <div data-section="market-cap" class="mt-2">
         <h4 class="text-lg flex items-center text-gray-600">
+          <span class="material-icons-outlined mr-2">account_balance</span>
+          <span>Market Cap:&nbsp;</span>
+          <span data-key="market_cap_usd"></span>
+        </h4>
+      </div>
+
+      <div data-section="alert" class="hidden">
+        <h4 class="text-lg flex items-center text-gray-600 mt-2">
           <span class="material-icons-outlined mr-2">alarm</span>
-          <span data-key="show_alert"></span>
+          <span data-key="show_alert">alert at $ 111,000.00</span>
         </h4>
       </div>
     `;
@@ -65,12 +74,25 @@ export default class Card {
   }
 
   populatePrice(fragment) {
-    const el = fragment.querySelector('[data-key="price_usd"]');
-    if (!this.fieldVisible("price_usd")) return el?.remove?.();
-    if (el)
-      el.querySelector("strong").textContent = this.formatUSD(
+    const usdEl = fragment.querySelector('[data-key="price_usd"]');
+    if (!this.fieldVisible("price_usd")) {
+      usdEl && usdEl.remove();
+      return;
+    }
+    if (usdEl)
+      usdEl.querySelector("strong").textContent = this.formatUSD(
         this.data.price_usd ?? 0,
       );
+
+    const btcEl = fragment.querySelector('[data-key="price_btc"]');
+    if (!this.fieldVisible("price_btc")) {
+      btcEl && btcEl.remove();
+      return;
+    }
+
+    if (btcEl) {
+      btcEl.textContent = `Price BTC: ${this.data["price_btc"] ?? 0}`;
+    }
   }
 
   populatePercents(fragment) {
@@ -108,23 +130,25 @@ export default class Card {
     if (!container.childElementCount) container.remove();
   }
 
+  populateMarketCap(fragment) {
+    const marketCapSection = fragment.querySelector(
+      '[data-section="market-cap"]',
+    );
+    if (!this.fieldVisible("market_cap_usd")) {
+      marketCapSection && marketCapSection.remove();
+      return;
+    }
+
+    marketCapSection.classList.remove("hidden");
+
+    const textValue = fragment.querySelector('[data-key="market_cap_usd"]');
+    textValue.innerText = this.formatUSD(this.data["market_cap_usd"] ?? 0);
+  }
+
   populateAlert(fragment) {
     const alertSection = fragment.querySelector('[data-section="alert"]');
-    if (!this.fieldVisible("show_alert")) return alertSection?.remove?.();
-
-    // dynamic alert text: prefer data.alert or options.alertPrice, fallback to placeholder
-    const alertTextEl = alertSection.querySelector('[data-key="show_alert"]');
-    const alertVal =
-      this.data.alertPrice ??
-      this.options.alertPrice ??
-      this.data.alert ??
-      null;
-
-    if (alertVal != null) {
-      alertTextEl.textContent = `alert at ${this.formatUSD(alertVal)}`;
-    } else {
-      // if there's no alert value, remove section or put default text
-      alertTextEl.textContent = `alert at ${this.formatUSD(this.data.price_usd ?? 0)}`;
+    if (this.fieldVisible("show_alert")) {
+      alertSection && alertSection.classList.remove("hidden");
     }
   }
 
@@ -136,7 +160,8 @@ export default class Card {
     this.populateSymbol(fragment);
     this.populatePrice(fragment);
     this.populatePercents(fragment);
-    //this.populateAlert(fragment);
+    this.populateMarketCap(fragment);
+    this.populateAlert(fragment);
 
     this.card.appendChild(fragment);
     return this.card;
