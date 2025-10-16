@@ -19,6 +19,7 @@ const DISPLAYABLE_FIELDS = [
   { key: "percent_change_7d", label: "% 7 days", show: true },
   { key: "price_btc", label: "Price BTC", show: true },
   { key: "show_alert", label: "Show alert", show: true },
+  { key: "market_cap_usd", label: "Market Cap", show: true },
 ];
 
 function getCheckbox({ key, label, show }) {
@@ -33,19 +34,17 @@ function getCheckbox({ key, label, show }) {
   `;
 }
 
-async function createDefaultEditor(selector) {
+async function createEditor(selector, data, config) {
   const editorHtml = await loadTemplate("../partials/card-editor.html");
-  const defaultCard = await loadTemplate("../partials/simple-card.html");
 
   qs(selector).innerHTML = editorHtml;
 
   renderListWithTemplate(getCheckbox, qs(DRAWER_FORM_ID), DISPLAYABLE_FIELDS);
-
-  qs(DRAWER_CARD).innerHTML = defaultCard;
+  updateCard(data, config);
 }
 
-function updateCard(fields, entries) {
-  const card = new Card(entries, fields).render();
+function updateCard(data, config) {
+  const card = new Card(data, config).render();
 
   qs("#editable-card").innerHTML = "";
   qs("#editable-card").appendChild(card);
@@ -58,7 +57,7 @@ export default class CardDrawer {
   }
 
   async edit(selector) {
-    await createDefaultEditor(selector);
+    await createEditor(selector, this.coin, this.fields);
 
     this.runEditor();
   }
@@ -70,7 +69,7 @@ export default class CardDrawer {
         const target = this.fields.find((i) => i.key === checkbox.value);
         if (target) {
           target.show = checkbox.checked;
-          updateCard(this.fields, this.coin);
+          updateCard(this.coin, this.fields);
         }
       }),
     );
