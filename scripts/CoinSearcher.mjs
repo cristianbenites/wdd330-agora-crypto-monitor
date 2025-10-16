@@ -17,7 +17,12 @@ export default class CoinSearcher {
 
     this.coin = await this.service.findCoin(query);
     if (!this.coin) {
-      qs(LIST_CONTAINER).innerHTML = "<li>No results found</li>";
+      qs(LIST_CONTAINER).innerHTML = `
+        <div class="no-results">
+          <span class="material-icons bounce">search_off</span>
+          <p>No results found</p>
+        </div>
+      `;
       return;
     }
 
