@@ -108,3 +108,9 @@ export function runCloseModal() {
 export function uniqueId(prefix = "id") {
   return prefix + "-" + Date.now() + "-" + Math.floor(Math.random() * 10000);
 }
+
+export function goHome() {
+  const currentPath = window.location.pathname;
+  const basePath = currentPath.substring(0, currentPath.lastIndexOf("/"));
+  window.location.href = basePath + "/index.html";
+}

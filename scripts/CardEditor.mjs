@@ -2,6 +2,7 @@ import Card from "./Card.mjs";
 import SaveNotification from "./SaveNotification.mjs";
 import {
   getLocalStorage,
+  goHome,
   loadTemplate,
   qs,
   renderListWithTemplate,
@@ -96,7 +97,7 @@ export default class CardEditor {
 
     setLocalStorage("saved-cards", saved);
 
-    this.notification.show(() => (window.location.href = "/"));
+    this.notification.show(goHome);
   }
 
   runEditor() {
