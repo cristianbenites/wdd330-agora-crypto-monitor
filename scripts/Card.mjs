@@ -1,11 +1,17 @@
 export default class Card {
-  constructor(data, config) {
+  constructor(data, fields, id = null, canDelete = false, handleDelete = null) {
     this.data = data;
-    this.config = config;
+    this.fields = fields;
+    this.id = id;
+    this.canDelete = canDelete;
+    this.handleDelete = handleDelete;
 
     this.card = document.createElement("div");
+    if (this.id) {
+      this.card.id = this.id;
+    }
     this.card.className =
-      "max-w-fit bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-slide-up";
+      "relative max-w-fit bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-slide-up";
 
     this.template = `
       <h3 class="text-xl font-bold text-indigo-800" data-key="symbol"></h3>
@@ -23,6 +29,8 @@ export default class Card {
           <span data-key="market_cap_usd"></span>
         </h4>
       </div>
+
+      ${this.canDelete ? this.addThreeDotMenu() : ""}
     `;
   }
 
@@ -44,8 +52,18 @@ export default class Card {
   }
 
   fieldVisible(key) {
-    const field = this.config.find((f) => f.key === key);
+    const field = this.fields.find((f) => f.key === key);
     return field && field.show;
+  }
+
+  addThreeDotMenu() {
+    return `
+        <button data-key="${this.id}" class="delete-btn absolute top-0 right-0 flex justify-center items-center text-gray-500 hover:bg-gray-600 hover:text-gray-100 p-2 mt-2 mr-2 rounded-full cursor-pointer">
+          <span class="material-icons-outlined">
+          delete
+          </span>
+        </button>
+    `;
   }
 
   populateSymbol(fragment) {
@@ -76,7 +94,9 @@ export default class Card {
       usdEl.querySelector("strong").textContent = this.formatUSD(
         this.data.price_usd ?? 0,
       );
+  }
 
+  populatePriceBtc(fragment) {
     const btcEl = fragment.querySelector('[data-key="price_btc"]');
     if (!this.fieldVisible("price_btc")) {
       btcEl && btcEl.remove();
@@ -102,7 +122,7 @@ export default class Card {
       if (raw == null || raw === "") return;
 
       const { color, icon } = this.percentInfo(raw);
-      const label = this.config.find((f) => f.key === key)?.label ?? key;
+      const label = this.fields.find((f) => f.key === key)?.label ?? key;
 
       const div = document.createElement("div");
       div.className =
@@ -138,6 +158,16 @@ export default class Card {
     textValue.innerText = this.formatUSD(this.data["market_cap_usd"] ?? 0);
   }
 
+  populateDeleteBtn(fragment) {
+    const btn = fragment.querySelector(".delete-btn");
+
+    btn.addEventListener("click", () => {
+      if (typeof this.handleDelete === "function") {
+        this.handleDelete(this.id);
+      }
+    });
+  }
+
   render() {
     const template = document.createElement("template");
     template.innerHTML = this.template.trim();
@@ -145,8 +175,13 @@ export default class Card {
 
     this.populateSymbol(fragment);
     this.populatePrice(fragment);
+    this.populatePriceBtc(fragment);
     this.populatePercents(fragment);
     this.populateMarketCap(fragment);
+
+    if (this.canDelete) {
+      this.populateDeleteBtn(fragment);
+    }
 
     this.card.appendChild(fragment);
     return this.card;

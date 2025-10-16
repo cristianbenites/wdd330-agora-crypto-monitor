@@ -1,4 +1,4 @@
-import CardDrawer from "./CardDrawer.mjs";
+import CardEditor from "./CardEditor.mjs";
 import CoinSearcher from "./CoinSearcher.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 import { loadHeaderFooter, qs, setClick } from "./utils.mjs";
@@ -34,14 +34,14 @@ async function runCoinCardEditor(id) {
     <div class="flex items-center justify-start gap-2"> <div class="border-gray-300 inline-block h-6 w-6 animate-spin rounded-full border-4 border-t-blue-800"></div>Searching...</div>
   `;
 
-  const coin = await service.getCurrentCoinStatus(id);
+  const coinList = await service.getCurrentCoinStatus(id);
 
-  if (!coin) {
+  if (coinList.length < 1) {
     cards.innerHTML = "Sorry we couldn't load that crypto right now :(";
   } else {
     list.innerHTML = "";
     cards.innerHTML = "";
     qs("#title-cards").classList.remove("hidden");
-    new CardDrawer(coin).edit("#cards");
+    new CardEditor(coinList[0]).edit("#cards");
   }
 }

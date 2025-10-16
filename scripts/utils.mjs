@@ -107,3 +107,7 @@ export function runCloseModal() {
     setClick("#close-modal", () => qs("#modal").close());
   }
 }
+
+export function uniqueId(prefix = "id") {
+  return prefix + "-" + Date.now() + "-" + Math.floor(Math.random() * 10000);
+}

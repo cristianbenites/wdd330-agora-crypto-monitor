@@ -3,11 +3,11 @@ import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 const AVAILABLE_COINS = "available_coins";
 const PAGE_SIZE = 100;
 
-const baseURL = "https://api.coinlore.net/api/";
+const BASE_URL = "https://api.coinlore.net/api/";
 
 async function paginateTickers(start) {
   const response = await fetch(
-    `${baseURL}tickers/?start=${start}&limit=${PAGE_SIZE}`,
+    `${BASE_URL}tickers/?start=${start}&limit=${PAGE_SIZE}`,
   );
   if (!response.ok) return [];
   const data = await response.json();
@@ -64,9 +64,9 @@ export default class ExternalServices {
   }
 
   async getCurrentCoinStatus(id) {
-    const response = await fetch(`${baseURL}/ticker/?id=${id}`);
-    if (!response.ok) return null;
+    const response = await fetch(`${BASE_URL}/ticker/?id=${id}`);
+    if (!response.ok) return [];
     const data = await response.json();
-    return data && data.length > 0 ? data[0] : null;
+    return data ?? [];
   }
 }

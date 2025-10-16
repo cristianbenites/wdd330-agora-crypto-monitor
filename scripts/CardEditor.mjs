@@ -7,6 +7,7 @@ import {
   renderListWithTemplate,
   setClick,
   setLocalStorage,
+  uniqueId,
 } from "./utils.mjs";
 
 const DRAWER_FORM_ID = "#displayable-list";
@@ -46,7 +47,7 @@ function createSaveButton() {
   return btn;
 }
 
-async function createEditor(selector, data, config) {
+async function createEditor(selector, data, fields) {
   const editorHtml = await loadTemplate("../partials/card-editor.html");
 
   qs(selector).innerHTML = editorHtml;
@@ -56,20 +57,22 @@ async function createEditor(selector, data, config) {
   const saveBtn = createSaveButton();
   qs(DRAWER_FORM_ID).appendChild(saveBtn);
 
-  updateCard(data, config);
+  updateCard(data, fields);
 }
 
-function updateCard(data, config) {
-  const card = new Card(data, config).render();
+function updateCard(data, fields) {
+  const card = new Card(data, fields).render();
 
-  qs("#editable-card").innerHTML = "";
-  qs("#editable-card").appendChild(card);
+  qs(DRAWER_CARD).innerHTML = "";
+  qs(DRAWER_CARD).appendChild(card);
 }
 
-export default class CardDrawer {
+export default class CardEditor {
   constructor(coin) {
     this.coin = coin;
     this.fields = [...DISPLAYABLE_FIELDS];
+    this.id = uniqueId(coin.symbol);
+    this.apiId = coin.id;
     this.notification = new SaveNotification();
   }
 
@@ -83,9 +86,12 @@ export default class CardDrawer {
     let saved = getLocalStorage("saved-cards");
 
     if (saved) {
-      saved = [...saved, this.fields];
+      saved = [
+        ...saved,
+        { id: this.id, apiId: this.apiId, fields: this.fields },
+      ];
     } else {
-      saved = [this.fields];
+      saved = [{ id: this.id, apiId: this.apiId, fields: this.fields }];
     }
 
     setLocalStorage("saved-cards", saved);
