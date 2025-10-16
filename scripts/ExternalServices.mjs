@@ -36,7 +36,6 @@ export default class ExternalServices {
       const list = await paginateTickers(start);
 
       if (list.length === 0) break;
-      console.log(list);
 
       const mapped = list.map((c) => ({
         id: c.id,

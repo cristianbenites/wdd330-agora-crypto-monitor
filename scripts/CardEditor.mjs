@@ -48,7 +48,7 @@ function createSaveButton() {
 }
 
 async function createEditor(selector, data, fields) {
-  const editorHtml = await loadTemplate("../partials/card-editor.html");
+  const editorHtml = await loadTemplate("./partials/card-editor.html");
 
   qs(selector).innerHTML = editorHtml;
 
