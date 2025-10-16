@@ -1,3 +1,4 @@
+import Card from "./Card.mjs";
 import {
   loadTemplate,
   qs,
@@ -44,18 +45,10 @@ async function createDefaultEditor(selector) {
 }
 
 function updateCard(fields, entries) {
+  const card = new Card(entries, fields).render();
 
-  fields.forEach(field => {
-    const el = qs(`#${field.key}`);
-    const elValue = qs(`data-place-value="${field.key}"`);
-
-    // TODO
-    elValue.innerText = entries.find()
-
-
-    field.
-  })
-
+  qs("#editable-card").innerHTML = "";
+  qs("#editable-card").appendChild(card);
 }
 
 export default class CardDrawer {
@@ -77,6 +70,7 @@ export default class CardDrawer {
         const target = this.fields.find((i) => i.key === checkbox.value);
         if (target) {
           target.show = checkbox.checked;
+          updateCard(this.fields, this.coin);
         }
       }),
     );
