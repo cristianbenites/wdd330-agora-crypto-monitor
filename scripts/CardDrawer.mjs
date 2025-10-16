@@ -81,8 +81,6 @@ export default class CardDrawer {
 
   async saveCard() {
     let saved = getLocalStorage("saved-cards");
-    console.log(this.fields);
-    console.log(this);
 
     if (saved) {
       saved = [...saved, this.fields];

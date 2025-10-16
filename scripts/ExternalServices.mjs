@@ -10,7 +10,7 @@ async function paginateTickers(start) {
     `${baseURL}tickers/?start=${start}&limit=${PAGE_SIZE}`,
   );
   if (!response.ok) return [];
-  const data = await res.json();
+  const data = await response.json();
   return data.data || [];
 }
 
@@ -29,12 +29,14 @@ export default class ExternalServices {
     if (found) return found;
 
     let start = coins.length;
+    let maxTries = 10;
 
     // continue fetching new pages
-    while (true) {
-      const list = paginateTickers(start);
+    while (maxTries >= 1) {
+      const list = await paginateTickers(start);
 
       if (list.length === 0) break;
+      console.log(list);
 
       const mapped = list.map((c) => ({
         id: c.id,
@@ -55,6 +57,7 @@ export default class ExternalServices {
       if (found) return found;
 
       start += PAGE_SIZE;
+      maxTries--;
     }
 
     return null;
